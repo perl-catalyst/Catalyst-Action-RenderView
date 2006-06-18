@@ -26,6 +26,6 @@ sub test_skipview : Global {
     $c->res->body( 'Skipped View' );
 }
 
-sub end : ActionClass('RenderView');
+sub end : ActionClass('RenderView') {}
 
 1;

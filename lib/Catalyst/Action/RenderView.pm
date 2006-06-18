@@ -5,7 +5,8 @@ our $VERSION='0.01';
 use base 'Catalyst::Action';
 
 sub execute {
-    my ( $self, $c ) = @_;
+    my $self = shift;
+    my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
     die "forced debug" if $c->debug && $c->req->params->{dump_info};
     return 1 if $c->req->method eq 'HEAD';
