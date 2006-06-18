@@ -9,12 +9,12 @@ sub execute {
     my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
     die "forced debug" if $c->debug && $c->req->params->{dump_info};
+    if(! $c->response->content_type ) {
+        $c->response->content_type( 'text/html; charset=utf-8' );
     return 1 if $c->req->method eq 'HEAD';
     return 1 if length( $c->response->body );
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
-    if(! $c->response->content_type ) {
-        $c->response->content_type( 'text/html; charset=utf-8' );
     }
     $c->forward( $c->view );
 };
