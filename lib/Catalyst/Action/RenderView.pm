@@ -16,7 +16,9 @@ sub execute {
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
     }
-    $c->forward( $c->view );
+    my $view=$c->view() 
+        || die "Catalyst::Plugin::DefaultEnd could not find a view to forward to.\n";
+    $c->forward( $view );
 };
  
 1;
