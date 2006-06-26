@@ -17,7 +17,7 @@ sub execute {
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
     }
     my $view=$c->view() 
-        || die "Catalyst::Plugin::DefaultEnd could not find a view to forward to.\n";
+        || die "Catalyst::Action::RenderView could not find a view to forward to.\n";
     $c->forward( $view );
 };
  
@@ -25,11 +25,11 @@ sub execute {
 
 =head1 NAME
 
-Catalyst::Action::ProcessView - Sensible default end action.
+Catalyst::Action::RenderView - Sensible default end action.
 
 =head1 SYNOPSIS
 
-    use Catalyst qw/-Debug DefaultEnd/;
+    sub end : ActionClass('RenderView') {}
 
 =head1 DESCRIPTION
 
