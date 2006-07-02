@@ -7,20 +7,40 @@ SYNOPSIS
 DESCRIPTION
     This action implements a sensible default end action, which will forward
     to the first available view, unless status is set to 3xx, or there is a
-    response body. It also allows you to pass dump_info=1 to the url in
+    response body. It also allows you to pass "dump_info=1" to the url in
     order to force a debug screen, while in debug mode.
 
-    If you have more than 1 view, you can specify which one to use with the
-    'default_view' config setting (See view in Catalyst.)
+    If you have more than one view, you can specify which one to use with
+    the "default_view" config setting (see ""$c-" in Catalystview($name)">.)
 
 METHODS
-    end The default end action, you can override this as required in your
-        application class, normal inheritance applies.
+    end The default "end" action. You can override this as required in your
+        application class; normal inheritance applies.
+
+EXTENDING
+        To add something to an "end" action that is called before rendering,
+        simply place it in the "end" method:
+
+            sub end : ActionClass('RenderView') {
+              my ( $self, $c ) = @_;
+              # do stuff here; the RenderView action is called afterwards
+            }
+
+        To add things to an "end" action that are called *after* rendering,
+        you can set it up like this:
+
+            sub render : ActionClass('RenderView') { }
+
+            sub end : Private { 
+              my ( $self, $c ) = @_;
+              $c->forward('render');
+              # do stuff here
+            }
 
 AUTHOR
     Marcus Ramberg <marcus@thefeed.no>
 
 LICENSE
-    This library is free software . You can redistribute it and/or modify it
-    under the same terms as perl itself.
+    This library is free software. You can redistribute it and/or modify it
+    under the same terms as Perl itself.
 

@@ -1,6 +1,6 @@
 package Catalyst::Action::RenderView;
 
-our $VERSION='0.02';
+our $VERSION='0.03';
 
 use base 'Catalyst::Action';
 
@@ -8,7 +8,14 @@ sub execute {
     my $self = shift;
     my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
-    die "forced debug" if $c->debug && $c->req->params->{dump_info};
+    if ($c->debug && $c->req->params->{dump_info}) {
+	foreach my $item (keys %{$c->stash}) {
+	    undef $item->{result_source} 
+	    if $item->isa('DBIx::Class::ResultSet') ||
+	    if $item->isa('DBIx::Class::Row');
+	}
+	die "forced debug" 
+    }
     if(! $c->response->content_type ) {
         $c->response->content_type( 'text/html; charset=utf-8' );
     }
@@ -35,11 +42,11 @@ Catalyst::Action::RenderView - Sensible default end action.
 
 This action implements a sensible default end action, which will forward
 to the first available view, unless status is set to 3xx, or there is a
-response body. It also allows you to pass dump_info=1 to the url in order
-to force a debug screen, while in debug mode.
+response body. It also allows you to pass C<dump_info=1> to the url in
+order to force a debug screen, while in debug mode.
 
-If you have more than 1 view, you can specify which one to use with the
-'default_view' config setting (See view in L<Catalyst>.)
+If you have more than one view, you can specify which one to use with
+the C<default_view> config setting (see L<Catalyst/"$c->view($name)">.)
 
 =head1 METHODS
 
@@ -47,11 +54,29 @@ If you have more than 1 view, you can specify which one to use with the
 
 =item end
 
-The default end action, you can override this as required in your application
-class, normal inheritance applies.
+The default C<end> action. You can override this as required in your
+application class; normal inheritance applies.
 
-=cut
+=head1 EXTENDING
 
+To add something to an C<end> action that is called before rendering,
+simply place it in the C<end> method:
+
+    sub end : ActionClass('RenderView') {
+      my ( $self, $c ) = @_;
+      # do stuff here; the RenderView action is called afterwards
+    }
+
+To add things to an C<end> action that are called I<after> rendering,
+you can set it up like this:
+
+    sub render : ActionClass('RenderView') { }
+
+    sub end : Private { 
+      my ( $self, $c ) = @_;
+      $c->forward('render');
+      # do stuff here
+    }
 
 =back
 
@@ -61,8 +86,8 @@ Marcus Ramberg <marcus@thefeed.no>
 
 =head1 LICENSE
 
-This library is free software . You can redistribute it and/or modify it under
-the same terms as perl itself.
+This library is free software. You can redistribute it and/or modify it
+under the same terms as Perl itself.
 
 =cut
 
