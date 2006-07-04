@@ -1,6 +1,6 @@
 package Catalyst::Action::RenderView;
 
-our $VERSION='0.03';
+our $VERSION='0.04';
 
 use base 'Catalyst::Action';
 
@@ -9,11 +9,6 @@ sub execute {
     my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
     if ($c->debug && $c->req->params->{dump_info}) {
-	foreach my $item (keys %{$c->stash}) {
-	    undef $item->{result_source} 
-	    if $item->isa('DBIx::Class::ResultSet') ||
-	    if $item->isa('DBIx::Class::Row');
-	}
 	die "forced debug" 
     }
     if(! $c->response->content_type ) {

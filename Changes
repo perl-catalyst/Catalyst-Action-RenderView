@@ -1,3 +1,6 @@
+0.04 2006-07-04 09:21:00
+    - That debug code wasn't quite production ready : /
+
 0.03 2006-07-02 11:26:00 
     - Forgot to update use test as well, silly git.
 
