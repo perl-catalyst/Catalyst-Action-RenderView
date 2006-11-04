@@ -60,8 +60,9 @@ application class; normal inheritance applies.
 
 =item execute
 
-Handles the RenderView action.  Dispatches control to superclasses,
-then forwards to the default View.
+Dispatches control to superclasses, then forwards to the default View.
+
+See L<Catalyst::Action/METHODS/action>.
 
 =back
 
