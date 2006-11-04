@@ -52,6 +52,19 @@ the C<default_view> config setting (see L<Catalyst/"$c->view($name)">.)
 The default C<end> action. You can override this as required in your
 application class; normal inheritance applies.
 
+=back
+
+=head1 INTERNAL METHODS
+
+=over 4
+
+=item execute
+
+Handles the RenderView action.  Dispatches control to superclasses,
+then forwards to the default View.
+
+=back
+
 =head1 EXTENDING
 
 To add something to an C<end> action that is called before rendering,
@@ -72,8 +85,6 @@ you can set it up like this:
       $c->forward('render');
       # do stuff here
     }
-
-=back
 
 =head1 AUTHOR
 
