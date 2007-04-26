@@ -11,18 +11,19 @@ DESCRIPTION
     order to force a debug screen, while in debug mode.
 
     If you have more than one view, you can specify which one to use with
-    the "default_view" config setting (see ""$c-" in Catalystview($name)">.)
+    the "default_view" config setting (see Catalyst's "$c-"view($name)>
+    method).
 
 METHODS
-    end The default "end" action. You can override this as required in your
-        application class; normal inheritance applies.
+  end
+    The default "end" action. You can override this as required in your
+    application class; normal inheritance applies.
 
 INTERNAL METHODS
-    execute
-        Dispatches control to superclasses, then forwards to the default
-        View.
+  execute
+    Dispatches control to superclasses, then forwards to the default View.
 
-        See "METHODS/action" in Catalyst::Action.
+    See "METHODS/action" in Catalyst::Action.
 
 EXTENDING
     To add something to an "end" action that is called before rendering,
