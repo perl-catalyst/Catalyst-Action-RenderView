@@ -12,16 +12,16 @@ sub execute {
     my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
     if ($c->debug && $c->req->params->{dump_info}) {
-	die "forced debug" 
+        die "forced debug" 
     }
     if(! $c->response->content_type ) {
         $c->response->content_type( 'text/html; charset=utf-8' );
     }
     return 1 if $c->req->method eq 'HEAD';
-    return 1 if length( $c->response->body );
+    return 1 if $c->response->body && length( $c->response->body );
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
-    my $view=$c->view() 
+    my $view = $c->view() 
         || die "Catalyst::Action::RenderView could not find a view to forward to.\n";
     $c->forward( $view );
 };
