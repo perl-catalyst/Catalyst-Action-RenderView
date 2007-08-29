@@ -1,4 +1,8 @@
-0.05 2007-06-19 13:54:00
+0.06 2007-08-29 16:35:00
+    - Add support for scrubbing stash objects.
+    - Remove undef warning
+
+0.05 2007-04-26
     - switch to Module::Install
 
 0.04 2006-07-04 09:21:00

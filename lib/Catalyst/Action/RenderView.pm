@@ -3,25 +3,49 @@ package Catalyst::Action::RenderView;
 use strict;
 use warnings;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use base 'Catalyst::Action';
+
+use Data::Visitor::Callback;
+
+my %ignore_classes = ();
 
 sub execute {
     my $self = shift;
     my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
+    
+    $c->config->{debug}->{ignore_classes} = [ qw/
+        DBIx::Class::ResultSource::Table 
+        DBIx::Class::ResultSourceHandle
+        / ] unless exists $c->config->{debug}->{ignore_classes};
+
+    $c->config->{debug}->{scrubber_func} = sub { $_='[' . ref($_) . ']' }
+        unless exists $c->config->{debug}->{scrubber_func};
+    
     if ($c->debug && $c->req->params->{dump_info}) {
-	die "forced debug" 
+        unless ( keys %ignore_classes ) {
+            foreach my $class (@{$c->config->{debug}->{ignore_classes}}) {
+                $ignore_classes{$class} = $c->config->{debug}->{scrub_replacement};
+            }
+        } 
+        Data::Visitor::Callback->new(
+            "ignore_return_values"             => 1,
+            "object"                           => "visit_ref",
+            %ignore_classes,
+        )->visit( $c->stash );
+        die('Forced debug - Scrubbed output');
     }
+    
     if(! $c->response->content_type ) {
         $c->response->content_type( 'text/html; charset=utf-8' );
     }
     return 1 if $c->req->method eq 'HEAD';
-    return 1 if length( $c->response->body );
+    return 1 if $c->response->body && length( $c->response->body );
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
-    my $view=$c->view() 
+    my $view = $c->view() 
         || die "Catalyst::Action::RenderView could not find a view to forward to.\n";
     $c->forward( $view );
 };
@@ -61,6 +85,25 @@ application class; normal inheritance applies.
 Dispatches control to superclasses, then forwards to the default View.
 
 See L<Catalyst::Action/METHODS/action>.
+
+=head1 SCRUBBING OUTPUT
+
+When you force debug with dump_info=1, RenderView is capable of removing
+classes from the objects in your stash. By default it will replace any
+DBIx::Class resultsource objects with the class name, which cleans up the
+debug output considerably, but you can change what gets scrubbed by 
+setting a list of classes in $c->config->{debug}->{ignore_classes}.
+For instance:
+
+    $c->config->{debug}->{ignore_classes}=[]; 
+    
+To disable the functionality. You can also set 
+config->{debug}->{scrubber_func} to change what it does with the 
+classes. For instance, this will undef it instead of putting in the 
+class name:
+
+    $c->config->{debug}->{scrubber_func}=sub { undef $_ }; 
+
 
 =head1 EXTENDING
 

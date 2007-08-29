@@ -5,6 +5,7 @@ all_from 'lib/Catalyst/Action/RenderView.pm';
 
 requires 'Catalyst::Runtime' => '5.70';
 requires 'Test::More';
+requires 'Data::Visitor';
 
 auto_install;
 WriteAll;
