@@ -3,11 +3,12 @@ package Catalyst::Action::RenderView;
 use strict;
 use warnings;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use base 'Catalyst::Action';
 
 use Data::Visitor::Callback;
+use UNIVERSAL qw/can/;
 
 my %ignore_classes = ();
 
@@ -19,22 +20,25 @@ sub execute {
     $c->config->{debug}->{ignore_classes} = [ qw/
         DBIx::Class::ResultSource::Table 
         DBIx::Class::ResultSourceHandle
+        DateTime
         / ] unless exists $c->config->{debug}->{ignore_classes};
 
-    $c->config->{debug}->{scrubber_func} = sub { $_='[' . ref($_) . ']' }
+    $c->config->{debug}->{scrubber_func} = sub { $_='[stringified to: ' .  $_ . ']' }
         unless exists $c->config->{debug}->{scrubber_func};
     
     if ($c->debug && $c->req->params->{dump_info}) {
         unless ( keys %ignore_classes ) {
             foreach my $class (@{$c->config->{debug}->{ignore_classes}}) {
-                $ignore_classes{$class} = $c->config->{debug}->{scrub_replacement};
+                $ignore_classes{$class} = $c->config->{debug}->{scrubber_func};
             }
         } 
-        Data::Visitor::Callback->new(
+        my $scrubber=Data::Visitor::Callback->new(
             "ignore_return_values"             => 1,
             "object"                           => "visit_ref",
             %ignore_classes,
-        )->visit( $c->stash );
+        );
+        $scrubber->visit( $c->stash );
+        $scrubber->visit( $c->config );
         die('Forced debug - Scrubbed output');
     }
     
