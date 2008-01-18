@@ -7,5 +7,7 @@ requires 'Catalyst::Runtime' => '5.70';
 requires 'Test::More';
 requires 'Data::Visitor' => '0.08';
 
+build_requires 'HTTP::Request::AsCGI';
+
 auto_install;
 WriteAll;
