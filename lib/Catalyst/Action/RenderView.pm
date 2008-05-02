@@ -3,7 +3,7 @@ package Catalyst::Action::RenderView;
 use strict;
 use warnings;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use base 'Catalyst::Action';
 
@@ -46,7 +46,7 @@ sub execute {
         $c->response->content_type( 'text/html; charset=utf-8' );
     }
     return 1 if $c->req->method eq 'HEAD';
-    return 1 if $c->response->body && length( $c->response->body );
+    return 1 if defined $c->response->body && length( $c->response->body );
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
     my $view = $c->view() 
@@ -72,7 +72,7 @@ response body. It also allows you to pass C<dump_info=1> to the url in
 order to force a debug screen, while in debug mode.
 
 If you have more than one view, you can specify which one to use with
-the C<default_view> config setting (see L<Catalyst>'s C<$c->view($name)>
+the C<default_view> config setting (see L<Catalyst>'s C<$c-E<gt>view($name)>
 method).
 
 =head1 METHODS
