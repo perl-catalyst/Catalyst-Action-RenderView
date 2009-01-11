@@ -1,3 +1,9 @@
+0.08
+    - Store config in $c->config->{'Action::RenderView'}
+      instead of $c->config->{debug}.
+      Config from $c->config->{debug} is deprecated, but
+      still supported.
+
 0.08 2008-05-02 19:40:00
     - Add AsCGI to list of test requirements.
     - Check for defined()ness of $c->res->body so "0" is valid. (RT #30564)

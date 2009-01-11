@@ -17,19 +17,23 @@ sub execute {
     my ($controller, $c ) = @_;
     $self->NEXT::execute( @_ );
     
-    $c->config->{debug}->{ignore_classes} = [ qw/
+    $c->config->{'Action::RenderView'}->{ignore_classes} = 
+        ( ref($c->config->{'debug'}) eq 'HASH' ? $c->config->{'debug'}->{ignore_classes} : undef )
+        || [ qw/
         DBIx::Class::ResultSource::Table 
         DBIx::Class::ResultSourceHandle
         DateTime
-        / ] unless exists $c->config->{debug}->{ignore_classes};
+        / ] unless exists $c->config->{'Action::RenderView'}->{ignore_classes};
 
-    $c->config->{debug}->{scrubber_func} = sub { $_='[stringified to: ' .  $_ . ']' }
-        unless exists $c->config->{debug}->{scrubber_func};
+    $c->config->{'Action::RenderView'}->{scrubber_func} = 
+        ( ref($c->config->{'debug'}) eq 'HASH' ? $c->config->{'debug'}->{scrubber_func} : undef )
+        || sub { $_='[stringified to: ' .  $_ . ']' }
+        unless exists $c->config->{'Action::RenderView'}->{scrubber_func};
     
     if ($c->debug && $c->req->params->{dump_info}) {
         unless ( keys %ignore_classes ) {
-            foreach my $class (@{$c->config->{debug}->{ignore_classes}}) {
-                $ignore_classes{$class} = $c->config->{debug}->{scrubber_func};
+            foreach my $class (@{$c->config->{'Action::RenderView'}->{ignore_classes}}) {
+                $ignore_classes{$class} = $c->config->{'Action::RenderView'}->{scrubber_func};
             }
         } 
         my $scrubber=Data::Visitor::Callback->new(
@@ -96,18 +100,25 @@ When you force debug with dump_info=1, RenderView is capable of removing
 classes from the objects in your stash. By default it will replace any
 DBIx::Class resultsource objects with the class name, which cleans up the
 debug output considerably, but you can change what gets scrubbed by 
-setting a list of classes in $c->config->{debug}->{ignore_classes}.
+setting a list of classes in 
+$c->config->{'Action::RenderView'}->{ignore_classes}.
 For instance:
 
-    $c->config->{debug}->{ignore_classes}=[]; 
+    $c->config->{'Action::RenderView'}->{ignore_classes}=[]; 
     
 To disable the functionality. You can also set 
-config->{debug}->{scrubber_func} to change what it does with the 
+config->{'Action::RenderView'}->{scrubber_func} to change what it does with the 
 classes. For instance, this will undef it instead of putting in the 
 class name:
 
-    $c->config->{debug}->{scrubber_func}=sub { undef $_ }; 
+    $c->config->{'Action::RenderView'}->{scrubber_func}=sub { undef $_ }; 
 
+=head2 Deprecation notice
+
+This plugin used to be configured by setting C<< $c->config->{debug} >>.
+That configuration key is still supported in this release, but is 
+deprecated, please use the C< 'Action::RenderView' > namespace as shown 
+above for configuration in new code.
 
 =head1 EXTENDING
 
