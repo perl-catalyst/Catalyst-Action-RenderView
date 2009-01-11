@@ -7,6 +7,7 @@ our $VERSION = '0.08';
 
 use base 'Catalyst::Action';
 
+use MRO::Compat;
 use Data::Visitor::Callback;
 use UNIVERSAL qw/can/;
 
@@ -15,7 +16,7 @@ my %ignore_classes = ();
 sub execute {
     my $self = shift;
     my ($controller, $c ) = @_;
-    $self->NEXT::execute( @_ );
+    $self->next::method( @_ );
     
     $c->config->{'Action::RenderView'}->{ignore_classes} = 
         ( ref($c->config->{'debug'}) eq 'HASH' ? $c->config->{'debug'}->{ignore_classes} : undef )

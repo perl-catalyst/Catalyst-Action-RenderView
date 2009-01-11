@@ -3,6 +3,7 @@
       instead of $c->config->{debug}.
       Config from $c->config->{debug} is deprecated, but
       still supported.
+    - Switch from NEXT to next::method
 
 0.08 2008-05-02 19:40:00
     - Add AsCGI to list of test requirements.
