@@ -43,7 +43,6 @@ sub execute {
             %ignore_classes,
         );
         $scrubber->visit( $c->stash );
-        $scrubber->visit( $c->config );
         die('Forced debug - Scrubbed output');
     }
     

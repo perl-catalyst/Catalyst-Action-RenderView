@@ -1,4 +1,4 @@
-0.08
+0.08 2009-01-19 19:38:00
     - Store config in $c->config->{'Action::RenderView'}
       instead of $c->config->{debug}.
       Config from $c->config->{debug} is deprecated, but
