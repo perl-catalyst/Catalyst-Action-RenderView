@@ -1,3 +1,7 @@
+0.10 2009-04-29 18:24:50
+    - Depend on Data::Visitor 0.24 to avoid Class::MOP deprecation
+      warnings. (Florian Ragwitz)
+
 0.09 2009-02-18 21:32:00
     - Store config in $c->config->{'Action::RenderView'}
       instead of $c->config->{debug}.
@@ -11,9 +15,9 @@
 
 0.07 2007-09-01 11:03:00
     - Add DateTime to default list of scrubbed objects
-    - Stringify rather than ref by default , 
+    - Stringify rather than ref by default ,
       more explicit message
-      
+
 0.06 2007-08-29 16:35:00
     - Add support for scrubbing stash objects.
     - Remove undef warning
@@ -24,11 +28,11 @@
 0.04 2006-07-04 09:21:00
     - That debug code wasn't quite production ready : /
 
-0.03 2006-07-02 11:26:00 
+0.03 2006-07-02 11:26:00
     - Forgot to update use test as well, silly git.
 
-0.02 2006-06-29 14:59:00 
+0.02 2006-06-29 14:59:00
     - Oops, moved content check ending brace up.
-    
+
 0.01  2006-06-26 17:14:00
     - Initial release
