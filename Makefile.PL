@@ -15,4 +15,6 @@ requires 'MRO::Compat';
 test_requires 'HTTP::Request::AsCGI';
 
 auto_install;
+resources repository => 'http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Action-RenderView/trunk/';
+
 WriteAll;
