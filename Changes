@@ -1,3 +1,7 @@
+0.11 2009-06-28 19:29:16
+    - Update Module::Install to 0.87 to unbreak auto_install.
+      No functional changes.
+
 0.10 2009-04-29 18:24:50
     - Depend on Data::Visitor 0.24 to avoid Class::MOP deprecation
       warnings. (Florian Ragwitz)
