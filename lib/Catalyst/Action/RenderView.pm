@@ -3,7 +3,7 @@ package Catalyst::Action::RenderView;
 use strict;
 use warnings;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 use base 'Catalyst::Action';
 
@@ -144,6 +144,12 @@ you can set it up like this:
 =head1 AUTHOR
 
 Marcus Ramberg <marcus@thefeed.no>
+
+=head1 COPYRIGHT
+
+Copyright (c) 2006 - 2009
+the Catalyst::Action::RenderView L</AUTHOR>
+as listed above.
 
 =head1 LICENSE
 

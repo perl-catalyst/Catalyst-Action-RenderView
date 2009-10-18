@@ -1,3 +1,6 @@
+0.12 2009-10-18 19:10:00 BST
+    - Fixup copyright information
+
 0.11 2009-06-28 19:29:16
     - Update Module::Install to 0.87 to unbreak auto_install.
       No functional changes.
