@@ -3,7 +3,7 @@ package Catalyst::Action::RenderView;
 use strict;
 use warnings;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 use base 'Catalyst::Action';
 
@@ -141,9 +141,11 @@ you can set it up like this:
       # do stuff here
     }
 
-=head1 AUTHOR
+=head1 AUTHORS
 
 Marcus Ramberg <marcus@thefeed.no>
+
+Florian Ragwitz E<lt>rafl@debian.orgE<gt>
 
 =head1 COPYRIGHT
 
