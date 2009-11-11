@@ -71,13 +71,15 @@ Catalyst::Action::RenderView - Sensible default end action.
 =head1 DESCRIPTION
 
 This action implements a sensible default end action, which will forward
-to the first available view, unless status is set to 3xx, or there is a
-response body. It also allows you to pass C<dump_info=1> to the url in
+to the first available view, unless C<< $c->res->status >> is a 3xx code
+(redirection, not modified, etc.), 204 (no content), or C<< $c->res->body >> has
+already been set. It also allows you to pass C<dump_info=1> to the url in
 order to force a debug screen, while in debug mode.
 
 If you have more than one view, you can specify which one to use with
-the C<default_view> config setting (see L<Catalyst>'s C<$c-E<gt>view($name)>
-method).
+the C<default_view> config setting and the C<current_view> and
+C<current_view_instance> stash keys (see L<Catalyst>'s C<$c-E<gt>view($name)>
+method -- this module simply calls C<< $c->view >> with no argument).
 
 =head1 METHODS
 
@@ -104,14 +106,14 @@ setting a list of classes in
 $c->config->{'Action::RenderView'}->{ignore_classes}.
 For instance:
 
-    $c->config->{'Action::RenderView'}->{ignore_classes}=[]; 
+    $c->config->{'Action::RenderView'}->{ignore_classes} = []; 
     
 To disable the functionality. You can also set 
 config->{'Action::RenderView'}->{scrubber_func} to change what it does with the 
 classes. For instance, this will undef it instead of putting in the 
 class name:
 
-    $c->config->{'Action::RenderView'}->{scrubber_func}=sub { undef $_ }; 
+    $c->config->{'Action::RenderView'}->{scrubber_func} = sub { undef $_ };
 
 =head2 Deprecation notice
 
