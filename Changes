@@ -1,3 +1,6 @@
+0.14 2009-12-03 03:13:23 GMT
+    - Remove warnings from tests about actions in the app root
+
 0.13 2009-10-24 04:48:03 PDT
     - Re-release 0.12 without changes for reindexing by CPAN/PAUSE.
 

@@ -3,13 +3,12 @@ package Catalyst::Action::RenderView;
 use strict;
 use warnings;
 
-our $VERSION = '0.13';
+our $VERSION = '0.14';
 
 use base 'Catalyst::Action';
 
 use MRO::Compat;
 use Data::Visitor::Callback;
-use UNIVERSAL qw/can/;
 
 my %ignore_classes = ();
 

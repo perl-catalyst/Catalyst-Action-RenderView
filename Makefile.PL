@@ -1,7 +1,10 @@
-use inc::Module::Install 0.87;
+use strict;
+use warnings;
+use inc::Module::Install 0.91;
 
-if ( -e 'MANIFEST.SKIP' ) {
-    system( 'pod2text lib/Catalyst/Action/RenderView.pm > README' );
+if ( $Module::Install::AUTHOR ) {
+    system( 'pod2text lib/Catalyst/Action/RenderView.pm > README' )
+        and die $!;
 }
 
 name 'Catalyst-Action-RenderView';

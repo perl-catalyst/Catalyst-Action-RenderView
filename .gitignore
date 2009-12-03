@@ -1,0 +1,10 @@
+/Catalyst-Action-RenderView-*
+/MANIFEST
+/MANIFEST.bak
+/META.yml
+/Makefile
+/Makefile.old
+/README
+/blib/
+/inc/
+/pm_to_blib

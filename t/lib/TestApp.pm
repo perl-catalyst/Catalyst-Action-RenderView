@@ -1,31 +1,12 @@
 package TestApp;
-
 use strict;
+use warnings;
 use Catalyst;
 
-our $VERSION = '0.01';
+use base qw/Catalyst/;
 
-TestApp->config( name => 'TestApp', root => '/some/dir' );
+__PACKAGE__->config( name => 'TestApp', root => '/some/dir' );
 
-TestApp->setup;
-
-sub test_view : Global {
-    my( $self, $c ) = @_;
-    $c->config->{ view } = 'TestApp::View::TestView';
-    return 1;
-}
-
-sub test_firstview : Global {
-    my( $self, $c ) = @_;
-    delete $c->config->{ view };
-    return 1;
-}
-
-sub test_skipview : Global {
-    my( $self, $c ) = @_;
-    $c->res->body( 'Skipped View' );
-}
-
-sub end : ActionClass('RenderView') {}
+__PACKAGE__->setup;
 
 1;
