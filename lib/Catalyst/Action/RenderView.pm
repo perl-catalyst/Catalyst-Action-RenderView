@@ -51,7 +51,7 @@ sub execute {
     return 1 if $c->req->method eq 'HEAD';
     return 1 if defined $c->response->body && length( $c->response->body );
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
-    return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
+    return 1 if $c->response->status =~ /^(?:204)$/;
     my $view = $c->view() 
         || die "Catalyst::Action::RenderView could not find a view to forward to.\n";
     $c->forward( $view );

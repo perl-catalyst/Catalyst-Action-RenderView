@@ -16,8 +16,8 @@ requires 'Data::Visitor' => '0.24';
 requires 'MRO::Compat';
 
 test_requires 'HTTP::Request::AsCGI';
+test_requires 'Test::More' => '0.88';
 
-auto_install;
 resources repository => 'http://dev.catalyst.perl.org/repos/Catalyst/Catalyst-Action-RenderView/trunk/';
 
 WriteAll;
