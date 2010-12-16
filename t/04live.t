@@ -6,25 +6,12 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Test::More tests => 15;
+use Test::More 0.88;
 use Catalyst::Test 'TestApp';
 
-BEGIN {
-    no warnings 'redefine';
-
-    *Catalyst::Test::local_request = sub {
-        my ( $class, $request ) = @_;
-
-        require HTTP::Request::AsCGI;
-        my $cgi = HTTP::Request::AsCGI->new( $request, %ENV )->setup;
-
-        $class->handle_request;
-
-        return $cgi->restore->response;
-    };
-}
-
 run_tests();
+
+done_testing;
 
 sub run_tests {
 
