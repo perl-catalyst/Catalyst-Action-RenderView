@@ -16,8 +16,8 @@ sub execute {
     my $self = shift;
     my ($controller, $c ) = @_;
     $self->next::method( @_ );
-    
-    $c->config->{'Action::RenderView'}->{ignore_classes} = 
+
+    $c->config->{'Action::RenderView'}->{ignore_classes} =
         ( ref($c->config->{'debug'}) eq 'HASH' ? $c->config->{'debug'}->{ignore_classes} : undef )
         || [ qw/
         DBIx::Class::ResultSource::Table 
@@ -25,17 +25,17 @@ sub execute {
         DateTime
         / ] unless exists $c->config->{'Action::RenderView'}->{ignore_classes};
 
-    $c->config->{'Action::RenderView'}->{scrubber_func} = 
+    $c->config->{'Action::RenderView'}->{scrubber_func} =
         ( ref($c->config->{'debug'}) eq 'HASH' ? $c->config->{'debug'}->{scrubber_func} : undef )
         || sub { $_='[stringified to: ' .  $_ . ']' }
         unless exists $c->config->{'Action::RenderView'}->{scrubber_func};
-    
+
     if ($c->debug && $c->req->params->{dump_info}) {
         unless ( keys %ignore_classes ) {
             foreach my $class (@{$c->config->{'Action::RenderView'}->{ignore_classes}}) {
                 $ignore_classes{$class} = $c->config->{'Action::RenderView'}->{scrubber_func};
             }
-        } 
+        }
         my $scrubber=Data::Visitor::Callback->new(
             "ignore_return_values"             => 1,
             "object"                           => "visit_ref",
@@ -44,7 +44,7 @@ sub execute {
         $scrubber->visit( $c->stash );
         die('Forced debug - Scrubbed output');
     }
-    
+
     if(! $c->response->content_type ) {
         $c->response->content_type( 'text/html; charset=utf-8' );
     }
@@ -52,11 +52,11 @@ sub execute {
     return 1 if defined $c->response->body && length( $c->response->body );
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204)$/;
-    my $view = $c->view() 
+    my $view = $c->view()
         || die "Catalyst::Action::RenderView could not find a view to forward to.\n";
     $c->forward( $view );
 };
- 
+
 1;
 
 =head1 NAME
