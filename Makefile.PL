@@ -10,7 +10,7 @@ if ( $Module::Install::AUTHOR ) {
 name 'Catalyst-Action-RenderView';
 all_from 'lib/Catalyst/Action/RenderView.pm';
 
-requires 'Catalyst::Runtime' => '5.70';
+requires 'Catalyst::Runtime' => '5.80030';
 requires 'Test::More';
 requires 'Data::Visitor' => '0.24';
 requires 'MRO::Compat';
