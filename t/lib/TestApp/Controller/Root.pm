@@ -23,6 +23,12 @@ sub test_skipview : Global {
     $c->res->body( 'Skipped View' );
 }
 
+sub test_definedbody_skipsview : Global {
+    my( $self, $c ) = @_;
+    $c->res->header('X-Sendfile', '/some/file/path'); # This is the use-case
+    $c->res->body( '' );
+}
+
 sub end : ActionClass('RenderView') {}
 
 1;

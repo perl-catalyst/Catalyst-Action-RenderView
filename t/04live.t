@@ -62,12 +62,26 @@ sub run_tests {
         my $request  =
           HTTP::Request->new( GET => 'http://localhost:3000/test_skipview' );
 
-        ok( my $response = request($request), 'Request' );
-        ok( $response->is_success, 'Response Successful 2xx' );
-        is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
-        is( $response->code, 200, 'Response Code' );
+          ok( my $response = request($request), 'Request' );
+          ok( $response->is_success, 'Response Successful 2xx' );
+          is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
+          is( $response->code, 200, 'Response Code' );
 
-        is( $response->content, $expected, 'Content OK' );
+          is( $response->content, $expected, 'Content OK' );
+    }
+
+    # test X-Sendfile case
+    {
+        my $request  =
+          HTTP::Request->new( GET => 'http://localhost:3000/test_definedbody_skipsview' );
+
+      ok( my $response = request($request), 'Request' );
+      ok( $response->is_success, 'Response Successful 2xx' );
+      is( $response->header( 'Content-Type' ), 'text/html; charset=utf-8', 'Content Type' );
+      is( $response->code, 200, 'Response Code' );
+
+      is( $response->content, '', 'Content OK' );
+      is( $response->header('X-Sendfile'), '/some/file/path', 'X-Sendfile header present' );
     }
 
 }
