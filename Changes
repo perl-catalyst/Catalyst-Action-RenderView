@@ -1,3 +1,7 @@
+0.15 2011-01-04 14:19:36 CET
+    - Don't delegate to a view if the response body is set to `undef'.
+    - Make sure a Test::More with done_testing support is available.
+
 0.14 2009-12-03 03:13:23 GMT
     - Remove warnings from tests about actions in the app root
 
