@@ -20,7 +20,7 @@ sub execute {
     $c->config->{'Action::RenderView'}->{ignore_classes} =
         ( ref($c->config->{'debug'}) eq 'HASH' ? $c->config->{'debug'}->{ignore_classes} : undef )
         || [ qw/
-        DBIx::Class::ResultSource::Table 
+        DBIx::Class::ResultSource::Table
         DBIx::Class::ResultSourceHandle
         DateTime
         / ] unless exists $c->config->{'Action::RenderView'}->{ignore_classes};
@@ -100,16 +100,16 @@ See L<Catalyst::Action/METHODS/action>.
 When you force debug with dump_info=1, RenderView is capable of removing
 classes from the objects in your stash. By default it will replace any
 DBIx::Class resultsource objects with the class name, which cleans up the
-debug output considerably, but you can change what gets scrubbed by 
-setting a list of classes in 
+debug output considerably, but you can change what gets scrubbed by
+setting a list of classes in
 $c->config->{'Action::RenderView'}->{ignore_classes}.
 For instance:
 
-    $c->config->{'Action::RenderView'}->{ignore_classes} = []; 
-    
-To disable the functionality. You can also set 
-config->{'Action::RenderView'}->{scrubber_func} to change what it does with the 
-classes. For instance, this will undef it instead of putting in the 
+    $c->config->{'Action::RenderView'}->{ignore_classes} = [];
+
+To disable the functionality. You can also set
+config->{'Action::RenderView'}->{scrubber_func} to change what it does with the
+classes. For instance, this will undef it instead of putting in the
 class name:
 
     $c->config->{'Action::RenderView'}->{scrubber_func} = sub { undef $_ };
@@ -117,8 +117,8 @@ class name:
 =head2 Deprecation notice
 
 This plugin used to be configured by setting C<< $c->config->{debug} >>.
-That configuration key is still supported in this release, but is 
-deprecated, please use the C< 'Action::RenderView' > namespace as shown 
+That configuration key is still supported in this release, but is
+deprecated, please use the C< 'Action::RenderView' > namespace as shown
 above for configuration in new code.
 
 =head1 EXTENDING
@@ -136,7 +136,7 @@ you can set it up like this:
 
     sub render : ActionClass('RenderView') { }
 
-    sub end : Private { 
+    sub end : Private {
       my ( $self, $c ) = @_;
       $c->forward('render');
       # do stuff here
