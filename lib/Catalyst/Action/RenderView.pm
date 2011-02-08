@@ -101,18 +101,18 @@ When you force debug with dump_info=1, RenderView is capable of removing
 classes from the objects in your stash. By default it will replace any
 DBIx::Class resultsource objects with the class name, which cleans up the
 debug output considerably, but you can change what gets scrubbed by
-setting a list of classes in
-$c->config->{'Action::RenderView'}->{ignore_classes}.
+setting a list of classes in the C<< ignore_classes >> configuration key.
+
 For instance:
 
-    $c->config->{'Action::RenderView'}->{ignore_classes} = [];
+    C<< MyApp->config('Action::RenderView' => { ignore_classes => [ ... ] }); >>
 
-To disable the functionality. You can also set
-config->{'Action::RenderView'}->{scrubber_func} to change what it does with the
+To disable the functionality. You can also set C<< scrubber_func >>
+to change what it does with the
 classes. For instance, this will undef it instead of putting in the
 class name:
 
-    $c->config->{'Action::RenderView'}->{scrubber_func} = sub { undef $_ };
+    C<< MyApp->config('Action::RenderView' => { scrubber_func => sub { undef $_ } }); >>
 
 =head2 Deprecation notice
 
@@ -148,9 +148,11 @@ Marcus Ramberg <marcus@thefeed.no>
 
 Florian Ragwitz E<lt>rafl@debian.orgE<gt>
 
+Tomas Doran E<lt>bobtfish@bobtfish.netE<gt>
+
 =head1 COPYRIGHT
 
-Copyright (c) 2006 - 2009
+Copyright (c) 2006 - 2011
 the Catalyst::Action::RenderView L</AUTHOR>
 as listed above.
 
