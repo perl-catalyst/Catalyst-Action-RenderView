@@ -1,9 +1,11 @@
 package TestApp::View::TestView;
+use Moose;
 
-use base qw( Catalyst::View );
+extends qw( Catalyst::View );
 
 sub process {
     my( $self, $c ) = @_;
+    warn("HERE");
     $c->res->body( 'View' );
 }
 

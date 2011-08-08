@@ -23,6 +23,8 @@ sub execute {
         DBIx::Class::ResultSource::Table
         DBIx::Class::ResultSourceHandle
         DateTime
+        Moose::Meta::Attribute
+        Moose::Meta::Class
         / ] unless exists $c->config->{'Action::RenderView'}->{ignore_classes};
 
     $c->config->{'Action::RenderView'}->{scrubber_func} =
@@ -49,7 +51,7 @@ sub execute {
         $c->response->content_type( 'text/html; charset=utf-8' );
     }
     return 1 if $c->req->method eq 'HEAD';
-    return 1 if defined $c->response->body;
+    return 1 if $c->response->has_body;
     return 1 if scalar @{ $c->error } && !$c->stash->{template};
     return 1 if $c->response->status =~ /^(?:204|3\d\d)$/;
     my $view = $c->view()
