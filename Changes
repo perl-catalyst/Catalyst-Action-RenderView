@@ -1,6 +1,9 @@
 Revision history for Perl extension Catalyst-Action-RenderView
 
 {{ $NEXT }}
+  - fix Makefile.PL to work without PERL_USE_UNSAFE_INC
+  - revised packaging to use Dist::Zilla
+  - drop unused prereq HTTP::Request::AsCGI
 
 0.16 2011-01-05 19:28:00 GMT
   - Fix bug accidentally introduced in the last version with response
