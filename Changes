@@ -1,5 +1,7 @@
 Revision history for Perl extension Catalyst-Action-RenderView
 
+{{ $NEXT }}
+
 0.17    2024-10-12
   - fix Makefile.PL to work without PERL_USE_UNSAFE_INC
   - revised packaging to use Dist::Zilla
